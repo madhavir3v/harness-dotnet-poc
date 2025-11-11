@@ -41,7 +41,7 @@ pipeline:
                   name: Print Message
                   identifier: Print_Message
                   spec:
-                    connectorRef: docker_hub
+                    connectorRef: account.harnessImage
                     image: alpine:latest
                     shell: Sh
                     command: echo "Hello from Harness CI pipeline!"
