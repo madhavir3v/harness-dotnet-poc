@@ -1,7 +1,7 @@
 pipeline:
   name: sample-ci-pipeline
   identifier: sample_ci_pipeline
-  projectIdentifier: Default_Project
+  projectIdentifier: default_project
   orgIdentifier: default
   tags: {}
   stages:
