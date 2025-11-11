@@ -4,16 +4,36 @@ pipeline:
   projectIdentifier: default_project
   orgIdentifier: default
   tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: github_connector
+        repoName: harness-dotnet-poc
+        build:
+          type: branch
+          spec:
+            branch: main
   stages:
     - stage:
         name: Build
         identifier: Build
+        description: ""
         type: CI
         spec:
           cloneCodebase: true
           infrastructure:
-            type: Cloud
-            spec: {}
+            type: KubernetesDirect
+            spec:
+              connectorRef: account.harnessImage
+              namespace: harness-delegate-ng
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              os: Linux
+              containerSecurityContext:
+                privileged: false
+              runtime:
+                type: Cloud
+                spec: {}
           execution:
             steps:
               - step:
@@ -21,5 +41,13 @@ pipeline:
                   name: Print Message
                   identifier: Print_Message
                   spec:
-                    shell: Bash
-                    command: echo "Hello from Harness Pipeline!"
+                    connectorRef: docker_hub
+                    image: alpine:latest
+                    shell: Sh
+                    command: echo "Hello from Harness CI pipeline!"
+        failureStrategies:
+          - onFailure:
+              errors:
+                - AllErrors
+              action:
+                type: MarkAsFailure
