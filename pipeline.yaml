@@ -1,0 +1,25 @@
+pipeline:
+  name: sample-ci-pipeline
+  identifier: sample_ci_pipeline
+  projectIdentifier: Default_Project
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: Build
+        identifier: Build
+        type: CI
+        spec:
+          cloneCodebase: true
+          infrastructure:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Print Message
+                  identifier: Print_Message
+                  spec:
+                    shell: Bash
+                    command: echo "Hello from Harness Pipeline!"
